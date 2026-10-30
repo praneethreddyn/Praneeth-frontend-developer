@@ -1,3 +1,4 @@
+import os
 import html
 import json
 import re
@@ -270,8 +271,13 @@ class PortfolioHandler(SimpleHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    server = ThreadingHTTPServer(("127.0.0.1", 8000), PortfolioHandler)
-    print("Portfolio running at http://127.0.0.1:8000")
+    port = int(os.environ.get("PORT", 8000))
+
+    server = ThreadingHTTPServer(
+        ("0.0.0.0", port),
+        PortfolioHandler
+    )
+    # print("Portfolio running at http://127.0.0.1:8000")
     print("Press Ctrl+C to stop the server.")
     try:
         server.serve_forever()
